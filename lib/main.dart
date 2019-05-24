@@ -30,8 +30,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String flamesValue = 'Loading';
 
+  FocusNode secondnameFocusNode;
+
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController secondnameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.title;
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
@@ -40,6 +46,39 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: TextField(
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: firstnameController,
+                style: textStyle,
+                onEditingComplete: () =>
+                    FocusScope.of(context).requestFocus(secondnameFocusNode),
+                decoration: InputDecoration(
+                    labelText: 'First Name',
+                    labelStyle: textStyle,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: TextField(
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                controller: secondnameController,
+                style: textStyle,
+                decoration: InputDecoration(
+                    labelText: 'Second Name',
+                    labelStyle: textStyle,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               '$flamesValue',
               style: Theme.of(context).textTheme.display1,
@@ -47,13 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Flames'),
         onPressed: () {
-          Flames flames = new Flames();
+          Flames flames =
+              new Flames(firstnameController.text, secondnameController.text);
           flamesValue = flames.getflames();
           setState(() {});
         },
-        child: Icon(Icons.leak_add),
+        icon: Icon(Icons.leak_add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

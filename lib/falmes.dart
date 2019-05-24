@@ -1,8 +1,10 @@
 class Flames {
+  final String firstName;
+  final String secondName;
+
+  Flames(this.firstName, this.secondName);
+
   getflames() {
-    
-    String firstName = 'Shail';
-    String secondName = 'Riya';
     int count = flamesCount(firstName, secondName);
     String result = flamesResult(count);
     String flames = flamesMatch(result);
