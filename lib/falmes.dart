@@ -11,7 +11,6 @@ class Flames {
 
     print(count);
     print(result);
-    print(flames);
     return flames;
   }
 
